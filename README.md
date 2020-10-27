@@ -2,7 +2,7 @@
 a lightweight tool can help convert Java code to C# code. The tool is a batch of replacement rules and a configuration file to set up the rules
 
 # Story of Java2CSharp tool
-At the very beginning of NPOI development, it's very hard and boring job to convert Java code to C# in the first and second year. Then I started writing this tool to help convert Java to C# as quick as possible. 
+At the very beginning of NPOI development, it's very hard and boring job to convert Java code to C# in the first and second year. Then I started writing this tool to help convert Java to C# as quick as possible. Anyway, this tool did help a lot in the development of NPOI and let me focus on fixing bugs instead of repeat the replacement action again and again. 
 
 # How to setup this tool
 Open app.config and add new rules into rules node under the J2CS section 
