@@ -1,0 +1,64 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+    
+    - name: Build Release
+      run: msbuild JavaToCSharp.csproj /p:Configuration=Release /p:Platform="Any CPU"
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: JavaToCSharp-Release
+        path: bin/Release/JavaToCSharp.exe
+
+  release:
+    needs: build
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: JavaToCSharp-Release
+        path: release
+    
+    - name: Get version
+      id: version
+      run: |
+        if [ "${{ github.event_name }}" == "pull_request" ]; then
+          echo "version=pr-${{ github.event.pull_request.number }}-$(date +%Y%m%d)" >> $GITHUB_OUTPUT
+        else
+          echo "version=$(date +%Y%m%d)" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ steps.version.outputs.version }}
+        files: |
+          release/JavaToCSharp.exe
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
