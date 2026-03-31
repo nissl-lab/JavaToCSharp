@@ -14,7 +14,8 @@ namespace JavaToCSharp.Rules
 
         public override string Pattern
         {
-            get { return @"Get(FirstRow|Col|XFIndex|Data|LastRow|Column|Sid|Author|TotalSize|Row|FirstColumn|LastColumn|InnerValueEval|Height|Width|StringValue|ExternSheetIndex|Sheet|ColumnIndex|RowIndex)\(\)"; }
+            get { return @"Get(FirstRow|Col|XFIndex|Data|LastRow|Column|Sid|Author|TotalSize|Row|FirstColumn|"+
+@"LastColumn|InnerValueEval|Height|Width|StringValue|ExternSheetIndex|Sheet|ColumnIndex|RowIndex)\(\)"; }
         }
 
         protected override string ReplaceString(Match match)

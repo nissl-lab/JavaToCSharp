@@ -12,7 +12,7 @@ namespace JavaToCSharp.Rules
             get { return "Delete Keyword"; }
         }
 
-        const string pattern = @"\sfinal\s|\sthrows\s[a-zA-Z]+Exception|\.doubleValue\(\)";
+        const string pattern = @"\sfinal\s|\sthrows\s[a-zA-Z]?Exception|\.doubleValue\(\)";
 
         public override bool Execute(string strOrigin, out string strOutput, int iRowNumber)
         {
