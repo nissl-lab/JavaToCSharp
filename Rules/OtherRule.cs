@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -15,12 +16,12 @@ namespace JavaToCSharp.Rules
             }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"org\.apache\.poi\.([a-zA-Z]+)\."; }
         }
 
-        public override string Replacement
+        protected override string Replacement
         {
             get { return "namespace"; }
         }
@@ -40,12 +41,12 @@ namespace JavaToCSharp.Rules
             }
         }
 
-        public override string Replacement
+        protected override string Replacement
         {
             get { return "new Double"; }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"new Double\((.+)\)"; }
         }
@@ -57,12 +58,12 @@ namespace JavaToCSharp.Rules
     }
     public class EquivalentRule2 : EquivalentRule
     {
-        public override string Replacement
+        protected override string Replacement
         {
             get { return ".charAt(i)"; }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"\.charAt\((\w+)\)"; }
         }
@@ -76,12 +77,12 @@ namespace JavaToCSharp.Rules
 
     public class EquivalentRule3 : EquivalentRule
     {
-        public override string Replacement
+        protected override string Replacement
         {
             get { return "read"; }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"(\s|\.)(read\S)"; }
         }
@@ -108,12 +109,12 @@ namespace JavaToCSharp.Rules
             get { return "Getter"; }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"\.get([a-zA-Z0-9]+)\(\)"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             if (exclude.Contains(match.Groups[1].Value))
                 return ".Get" + match.Groups[1].Value + "()";
@@ -136,12 +137,12 @@ namespace JavaToCSharp.Rules
             get { return "setter"; }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"\.set([a-zA-Z0-9]+)\((.*?)\)"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             if (exclude.Contains(match.Groups[1].Value))
                 return ".Set" + match.Groups[1].Value + "(" + match.Groups[2].Value + ")";
@@ -156,12 +157,12 @@ namespace JavaToCSharp.Rules
             get { return "XXXX.class"; }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"\(([a-zA-Z0-9]+)\.class"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return "(typeof(" + match.Groups[1].Value + ")";
         }
@@ -174,12 +175,12 @@ namespace JavaToCSharp.Rules
             get { return "import"; }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"import\s(.*?)\.([a-zA-Z0-9]+|\*);"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             if (match.Groups[1].Value.StartsWith("junit."))
             {
@@ -199,12 +200,12 @@ namespace JavaToCSharp.Rules
             get { return "package"; }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"package\s(.*?);"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return "namespace " + match.Groups[1].Value + "\r\n{\r\n    using System;";
         }
@@ -217,12 +218,12 @@ namespace JavaToCSharp.Rules
             get { return "Assert.AreEqual"; }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"Assert.AreEqual\(("".*?"".*?),(.*?),(.*?)\);"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return "Assert.AreEqual(" + match.Groups[2].Value + "," + match.Groups[3].Value + "," + match.Groups[1].Value + ");";
         }
@@ -235,12 +236,12 @@ namespace JavaToCSharp.Rules
             get { return "TestFixture Attribute"; }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"(.*?)\sclass\s(.*?)Test(.*?)\s{"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return "    [TestFixture]\r\n    " + match.Groups[1].Value + " class " + match.Groups[2].Value + "Test" + match.Groups[3].Value + "\r\n{";
         }
@@ -253,12 +254,12 @@ namespace JavaToCSharp.Rules
             get { return "TestMethod Attribute"; }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"(public.*?)(t|T)est([a-zA-Z0-9_]+)\(\)\s(.*){"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return "    [Test]\r\n    public void Test" + match.Groups[3].Value + "(){";
         }
@@ -271,12 +272,12 @@ namespace JavaToCSharp.Rules
             get { return "IXXXX xxx = "; }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"\s(HSSF)?(Workbook|Sheet|Cell|Row|Name|Header|Footer|CellStyle|CellType)(\s+|\.)(.*?)="; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return " I" + match.Groups[2].Value + match.Groups[3].Value + match.Groups[4].Value + "=";
         }
@@ -292,7 +293,7 @@ namespace JavaToCSharp.Rules
             }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get
             {
@@ -300,7 +301,7 @@ namespace JavaToCSharp.Rules
             }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return match.Groups[1].Value + match.Groups[2].Value + "1" + match.Groups[3].Value;
         }
@@ -313,12 +314,12 @@ namespace JavaToCSharp.Rules
             get { return "CapitalizeRule2"; }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"(\w)\.([a-z])([a-zA-Z_0-9]+?)\("; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return match.Groups[1].Value + "." + match.Groups[2].Value.ToUpper() + match.Groups[3].Value + "(";
         }

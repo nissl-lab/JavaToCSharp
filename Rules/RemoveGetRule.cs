@@ -7,12 +7,12 @@ namespace JavaToCSharp.Rules
 {
     public class RemoveGetRule : EquivalentRule
     {
-        public override string Replacement
+        protected override string Replacement
         {
             get { return "GetXXX()"; }
         }
 
-        public override string Pattern
+        protected override string Pattern
         {
             get { return @"Get(FirstRow|Col|XFIndex|Data|LastRow|Column|Sid|Author|TotalSize|Row|FirstColumn|"+
 @"LastColumn|InnerValueEval|Height|Width|StringValue|ExternSheetIndex|Sheet|ColumnIndex|RowIndex)\(\)"; }

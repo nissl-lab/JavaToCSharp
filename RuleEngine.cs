@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Reflection;
-using JavaToCSharp.Configuration;
 using System.Configuration;
+using JavaToCSharp.Configuration;
 using JavaToCSharp.Rules;
 
 namespace JavaToCSharp
@@ -30,8 +30,8 @@ namespace JavaToCSharp
             foreach (RuleSection rs in config.Rules)
             {
                 EquivalentRule r = new EquivalentRule(rs.Name);
-                r.Pattern = rs.Pattern;
-                r.Replacement = rs.Replacement;
+                r.PatternValue = rs.Pattern;
+                r.ReplacementValue = rs.Replacement;
                 //Console.WriteLine(r.ToString());
                 AddRule(r);
             }
