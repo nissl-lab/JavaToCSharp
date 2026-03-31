@@ -15,11 +15,19 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0'
     
     - name: Build Release
-      run: msbuild JavaToCSharp.csproj /p:Configuration=Release /p:Platform="Any CPU"
+      run: dotnet build -c Release
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: JavaToCSharp-Release
+        path: bin/Release/net8.0/JavaToCSharp.dll
     
     - name: Upload artifact
       uses: actions/upload-artifact@v4

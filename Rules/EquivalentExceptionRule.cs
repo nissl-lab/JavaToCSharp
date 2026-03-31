@@ -6,7 +6,7 @@ namespace JavaToCSharp.Rules
 {
     public abstract class EquivalentExceptionRule : EquivalentRule
     {
-        protected override sealed string Replacement
+        protected override string Replacement
         {
             get { return this.Pattern; }
         }
@@ -21,7 +21,7 @@ namespace JavaToCSharp.Rules
             get { return @"RuntimeException"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return "Exception";
         }
@@ -35,7 +35,7 @@ namespace JavaToCSharp.Rules
             get { return @"ClassCastException"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return "InvalidCastException";
         }
@@ -49,7 +49,7 @@ namespace JavaToCSharp.Rules
             get { return @"UnsupportedEncodingException"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return "EncoderFallbackException";
         }
@@ -63,7 +63,7 @@ namespace JavaToCSharp.Rules
             get { return @"AssertionFailedError"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return "AssertFailedException";
         }
@@ -77,7 +77,7 @@ namespace JavaToCSharp.Rules
             get { return @"IllegalArgumentException"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return "ArgumentException";
         }
@@ -90,7 +90,7 @@ namespace JavaToCSharp.Rules
             get { return @"NumberFormatException"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return "FormatException";
         }
@@ -103,7 +103,7 @@ namespace JavaToCSharp.Rules
             get { return @"IllegalAccessError|IllegalStateException"; }
         }
 
-        public override string ReplaceString(Match match)
+        protected override string ReplaceString(Match match)
         {
             return "InvalidOperationException";
         }

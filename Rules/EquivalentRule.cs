@@ -22,16 +22,26 @@ namespace JavaToCSharp.Rules
             get { return _name; }
         }
 
-        public virtual string Replacement
+        protected virtual string Pattern
         {
             get;
             set;
         }
+
+        public string PatternValue
+        {
+            set { this.Pattern = value; }
+        }
         
-        public virtual string Pattern
+        protected virtual string Replacement
         {
             get;
             set;
+        }
+
+        public string ReplacementValue
+        {
+            set { this.Replacement = value; }
         }
 
         protected virtual string ReplaceString(Match match)
